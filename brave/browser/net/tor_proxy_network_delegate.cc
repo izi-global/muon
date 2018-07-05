@@ -28,23 +28,20 @@ TorProxyNetworkDelegate::~TorProxyNetworkDelegate() {}
 
 int TorProxyNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     GURL* new_url) {
   ConfigTorProxyInteral(request);
-  return extensions::AtomExtensionsNetworkDelegate::OnBeforeURLRequest(request,
-                                                                       callback,
-                                                                       new_url);
+  return extensions::AtomExtensionsNetworkDelegate::OnBeforeURLRequest(
+      request, std::move(callback), new_url);
 }
 
 int TorProxyNetworkDelegate::OnBeforeStartTransaction(
     net::URLRequest* request,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     net::HttpRequestHeaders* headers) {
   ConfigTorProxyInteral(request);
-  return extensions::AtomExtensionsNetworkDelegate::
-    OnBeforeStartTransaction(request,
-                             callback,
-                             headers);
+  return extensions::AtomExtensionsNetworkDelegate::OnBeforeStartTransaction(
+      request, std::move(callback), headers);
 }
 
 void TorProxyNetworkDelegate::OnBeforeRedirect(

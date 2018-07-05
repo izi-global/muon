@@ -307,7 +307,7 @@ void AtomNetworkDelegate::SetDevToolsNetworkEmulationClientId(
 
 int AtomNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     GURL* new_url) {
   if (!base::ContainsKey(response_listeners_, kOnBeforeRequest))
     return brightray::NetworkDelegate::OnBeforeURLRequest(
@@ -318,7 +318,7 @@ int AtomNetworkDelegate::OnBeforeURLRequest(
 
 int AtomNetworkDelegate::OnBeforeStartTransaction(
     net::URLRequest* request,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     net::HttpRequestHeaders* headers) {
   std::string client_id;
   {
@@ -351,7 +351,7 @@ void AtomNetworkDelegate::OnStartTransaction(
 
 int AtomNetworkDelegate::OnHeadersReceived(
     net::URLRequest* request,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     const net::HttpResponseHeaders* original,
     scoped_refptr<net::HttpResponseHeaders>* override,
     GURL* new_url) {
@@ -436,7 +436,7 @@ template<typename Out, typename... Args>
 int AtomNetworkDelegate::HandleResponseEvent(
     ResponseEvent type,
     net::URLRequest* request,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     Out out,
     Args... args) {
   const auto& info = response_listeners_[type];

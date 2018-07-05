@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "net/base/completion_once_callback.h"
 #include "net/cert/cert_verifier.h"
 
 namespace atom {
