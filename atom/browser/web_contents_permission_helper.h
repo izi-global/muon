@@ -25,19 +25,19 @@ class WebContentsPermissionHelper
   };
 
   void RequestFullscreenPermission(
-      const base::Callback<void(bool)>& callback);
+      const base::OnceCallback<void(bool)>& callback);
   void RequestMediaAccessPermission(
       const content::MediaStreamRequest& request,
-      const content::MediaResponseCallback& callback);
+      content::MediaResponseCallback callback);
   void RequestWebNotificationPermission(
-      const base::Callback<void(bool)>& callback);
+      const base::OnceCallback<void(bool)>& callback);
   void RequestPointerLockPermission(bool user_gesture);
   void RequestOpenExternalPermission(
-      const base::Callback<void(bool)>& callback,
+      const base::OnceCallback<void(bool)>& callback,
       content::RenderFrameHost* rfh,
       const GURL& frame_url, bool user_gesture);
   void RequestProtocolRegistrationPermission(
-      const base::Callback<void(bool)>& callback,
+      const base::OnceCallback<void(bool)>& callback,
       bool user_gesture);
 
  private:
@@ -46,7 +46,7 @@ class WebContentsPermissionHelper
 
   void RequestPermission(
       content::PermissionType permission,
-      const base::Callback<void(bool)>& callback,
+      const base::OnceCallback<void(bool)>& callback,
       content::RenderFrameHost* rfh,
       const GURL& requesting_url = GURL(),
       bool user_gesture = false);
