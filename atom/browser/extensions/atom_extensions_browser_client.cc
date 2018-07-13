@@ -70,7 +70,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "extensions/common/file_util.h"
-#include "net/base/completion_once_callback.h"
 #include "net/url_request/url_request_simple_job.h"
 
 #include "electron/brave/common/extensions/api/generated_api_registration.h"
@@ -147,7 +146,7 @@ class URLRequestResourceBundleJob : public net::URLRequestSimpleJob {
       std::string* mime_type,
       std::string* charset,
       scoped_refptr<base::RefCountedMemory>* data,
-      net::CompletionOnceCallback callback) const override {
+      const net::CompletionCallback& callback) const override {
     const ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
     *data = rb.LoadDataResourceBytes(resource_id_);
 
@@ -191,7 +190,7 @@ class URLRequestResourceBundleJob : public net::URLRequestSimpleJob {
       *charset = "utf-8";
     }
     int result = read_result ? net::OK : net::ERR_INVALID_URL;
-    callback.Run(result);
+    std::move(callback).Run(result);
   }
 
   // We need the filename of the resource to determine the mime type.

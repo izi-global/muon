@@ -48,11 +48,11 @@ void AtomExtensionsNetworkDelegate::RunCallback(
 
     if (result != net::ERR_IO_PENDING) {
       // nothing ran the original callback
-      callbacks_[request_id].Run(net::OK);
+      std::move(callbacks_[request_id]).Run(net::OK);
     }
   } else {
     // nothing ran the original callback
-    callbacks_[request_id].Run(previous_result);
+    std::move(callbacks_[request_id]).Run(previous_result);
   }
 
   // make sure this don't run again
