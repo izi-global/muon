@@ -334,8 +334,8 @@ class WebContents : public mate::TrackableObject<WebContents>,
       const mate::Dictionary& options);
 
   void OnTabCreated(const mate::Dictionary& options,
-      base::Callback<void(content::WebContents*)> callback,
-      content::WebContents* tab);
+                    base::OnceCallback<void(content::WebContents*)> callback,
+                    content::WebContents* tab);
 
   void AuthorizePlugin(mate::Arguments* args);
 
